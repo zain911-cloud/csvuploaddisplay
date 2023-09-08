@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV File Viewer</title>
+</head>
+<body>
+    <h1>CSV File Viewer</h1>
+    
+    <!-- File input for uploading CSV file -->
+    <input type="file" id="csvFileInput" accept=".csv">
+    
+    <!-- Table to display CSV data -->
+    <table id="csvTable" border="1">
+        <!-- Table content will be dynamically generated here -->
+    </table>
+
+    <script>
+        // Event listener for file input change
+        document.getElementById('csvFileInput').addEventListener('change', handleFile);
+
+        // Function to handle CSV file selection
+        function handleFile(e) {
+            const file = e.target.files[0];
+            if (!file) {
+                alert('No file selected.');
+                return;
+            }
+
+            // Read the selected CSV file
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const csvData = event.target.result;
+                displayCSVTable(csvData);
+            };
+            reader.readAsText(file);
+        }
+
+        // Function to display CSV data in a table
+        function displayCSVTable(csvData) {
+            const csvTable = document.getElementById('csvTable');
+            csvTable.innerHTML = ''; // Clear existing table content
+
+            // Split CSV data into rows
+            const rows = csvData.split('\n');
+
+            // Create table headers from the first row (assuming it contains headers)
+            const headers = rows[0].split(',');
+            const headerRow = document.createElement('tr');
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                headerRow.appendChild(th);
+            });
+            csvTable.appendChild(headerRow);
+
+            // Create table rows from CSV data
+            for (let i = 1; i < rows.length; i++) {
+                const rowData = rows[i].split(',');
+                const row = document.createElement('tr');
+                rowData.forEach(data => {
+                    const td = document.createElement('td');
+                    td.textContent = data;
+                    row.appendChild(td);
+                });
+                csvTable.appendChild(row);
+            }
+        }
+    </script>
+</body>
+</html>
