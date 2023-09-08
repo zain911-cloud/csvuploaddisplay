@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build"  # Adjust this to your project's build command
+  publish = "C:\Users\Zain Ul Abdin Khan\OneDrive\Desktop\csv project"  # Adjust this to the directory with your built files
+
+[dev]
+  command = "npm start"  # Adjust this to your project's development server command
